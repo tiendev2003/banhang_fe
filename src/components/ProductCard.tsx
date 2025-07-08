@@ -26,7 +26,8 @@ const ProductCard: FC<ProductCardProps> = ({
   className = "",
   product
 }) => {
-  const image = product?.productImages?.length > 0 ? product?.productImages[0] : "";
+  const image = product?.productImages?.length > 0 ? product?.productImages[0] : "";    
+  const LIST_IMAGES_DEMO = product?.productImages?.map(img => img); // Giả định ProductImage có trường url
   const [showModalQuickView, setShowModalQuickView] = React.useState(false);
   const dispatch: AppDispatch = useDispatch();  const notifyAddTocart = async (product: Product) => {
     try {
@@ -152,7 +153,7 @@ const ProductCard: FC<ProductCardProps> = ({
           <Link to={`/cua-hang/${product?._id}`} className="block">
             <NcImage
               containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0"
-              src={image || "/default-image.jpg"}
+              src={LIST_IMAGES_DEMO[0]|| "/default-image.jpg"}
               className="object-cover w-full h-full drop-shadow-xl"
             />
           </Link>

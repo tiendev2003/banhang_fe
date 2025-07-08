@@ -139,14 +139,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const changeAvatar = async (formData: FormData): Promise<any> => {
     try {
       const urlavatar = await uploadImage(formData);
-      console.log(api.getUri() + "/api/" + urlavatar);
-      await api.put<User>(`/api/user/avatar`, {
-        avatar: api.getUri() + "/api" + urlavatar,
+       await api.put<User>(`/api/user/avatar`, {
+        avatar: api.getUri() + urlavatar
       });
 
       setUserInformation((prevUserInformation) => ({
         ...prevUserInformation!,
-        avatar: api.getUri() + "/api" + urlavatar,
+        avatar: api.getUri() + urlavatar,
       }));
     } catch (error: any) {
       console.error("Change avatar failed", error);

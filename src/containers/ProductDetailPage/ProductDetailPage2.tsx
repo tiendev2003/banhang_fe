@@ -440,18 +440,14 @@ const ProductDetailPage2: FC<ProductDetailPage2Props> = ({
               content: product?.description,
             },
             {
-              name: "Thành phần",
-              content: product?.ingredients,
-            },
-            {
-              name: "Hướng dẫn sử dụng",
-              content: product?.productUsage,
+              name: "Chất liệu",
+              content: product?.material??"",
             },
             {
               name: "Thông tin bổ sung",
               content: `
-                ${product.material ? `<p><strong>Chất liệu:</strong> ${product.material}</p>` : ''}
-                ${product.gender ? `<p><strong>Giới tính:</strong> ${product.gender}</p>` : ''}
+                ${product.material ? `Chất liệu:${product.material}` : ''}
+                ${product.gender ? `Giới tính:${product.gender}</p>` : ''}
                 ${product.style ? `<p><strong>Phong cách:</strong> ${product.style}</p>` : ''}
                 ${product.season ? `<p><strong>Mùa:</strong> ${product.season}</p>` : ''}
                 ${product.sizes?.length ? `<p><strong>Kích thước có sẵn:</strong> ${product.sizes.map(sizeId => {
@@ -512,6 +508,7 @@ const ProductDetailPage2: FC<ProductDetailPage2Props> = ({
               <img
                 className="object-cover w-full h-full rounded-md sm:rounded-xl"
                 src={product?.productImages[0]}
+                crossOrigin="anonymous"
               />
               <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-40 transition-opacity"></div>
             </div>
@@ -523,6 +520,7 @@ const ProductDetailPage2: FC<ProductDetailPage2Props> = ({
                 <img
                   className="object-container w-full h-fulll rounded-md sm:rounded-xl"
                   src={product?.productImages[1]}
+                  crossOrigin="anonymous"
                 />
                 <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-40 transition-opacity"></div>
               </div>

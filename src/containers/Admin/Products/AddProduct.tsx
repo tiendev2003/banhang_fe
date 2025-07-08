@@ -21,17 +21,15 @@ import { uploadImages } from "../../../utils/uploadImage";
 
 // Hằng số cho màu sắc và kích thước
 const PRODUCT_COLORS = [
-  { id: "red", name: "Đỏ", hex: "#FF0000" },
-  { id: "green", name: "Xanh lá", hex: "#00FF00" },
-  { id: "blue", name: "Xanh dương", hex: "#0000FF" },
   { id: "black", name: "Đen", hex: "#000000" },
   { id: "white", name: "Trắng", hex: "#FFFFFF" },
-  { id: "pink", name: "Hồng", hex: "#FFC0CB" },
-  { id: "yellow", name: "Vàng", hex: "#FFFF00" },
-  { id: "orange", name: "Cam", hex: "#FFA500" },
-  { id: "purple", name: "Tím", hex: "#800080" },
   { id: "gray", name: "Xám", hex: "#808080" },
+  { id: "navy", name: "Xanh navy", hex: "#000080" },
+  { id: "olive", name: "Xanh rêu", hex: "#808000" },
+  { id: "denim", name: "Xanh denim", hex: "#1560BD" },
+  { id: "beige", name: "Be", hex: "#F5F5DC" }
 ];
+
 
 const PRODUCT_SIZES = [
   { id: "XS", name: "XS" },
@@ -40,8 +38,17 @@ const PRODUCT_SIZES = [
   { id: "L", name: "L" },
   { id: "XL", name: "XL" },
   { id: "XXL", name: "XXL" },
+  // Size giày
+  { id: "36", name: "36" },
+  { id: "37", name: "37" },
+  { id: "38", name: "38" },
+  { id: "39", name: "39" },
+  { id: "40", name: "40" },
+  { id: "41", name: "41" },
+  { id: "42", name: "42" },
+  { id: "43", name: "43" },
+  { id: "44", name: "44" }
 ];
-
 interface FormInputs {
   name: string;
   description: string;
@@ -704,38 +711,6 @@ const AddProduct: React.FC = () => {
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
                 <label
-                  htmlFor="ingredients"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Thành phần
-                </label>
-                <textarea
-                  id="ingredients"
-                  rows={3}
-                  {...register("ingredients")}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                  placeholder="Nhập thành phần sản phẩm..."
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="productUsage"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Hướng dẫn sử dụng
-                </label>
-                <textarea
-                  id="productUsage"
-                  rows={3}
-                  {...register("productUsage")}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                  placeholder="Nhập hướng dẫn sử dụng..."
-                />
-              </div>
-              
-              <div>
-                <label
                   htmlFor="material"
                   className="block text-sm font-medium text-gray-700"
                 >
@@ -857,39 +832,68 @@ const AddProduct: React.FC = () => {
 
             {/* Sizes */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                Kích thước có sẵn
-              </label>
-              <Controller
-                name="selectedSizes"
-                control={control}
-                render={({ field }) => (
-                  <div className="flex flex-wrap gap-2">
-                    {PRODUCT_SIZES.map((size) => {
-                      const isSelected = field.value.includes(size.id);
-                      return (                        <button
-                          key={size.id}
-                          type="button"
-                          onClick={() => {
-                            const newSelectedSizes = isSelected
-                              ? field.value.filter((id) => id !== size.id)
-                              : [...field.value, size.id];
-                            field.onChange(newSelectedSizes);
-                          }}
-                          className={`px-4 py-2 border rounded-md text-sm font-medium transition-all ${
-                            isSelected
-                              ? "border-blue-500 bg-blue-50 text-blue-600"
-                              : "border-gray-300 hover:border-gray-400"
-                          }`}
-                        >
-                          {size.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              />
-            </div>
+  <label className="block text-sm font-medium text-gray-700 mb-3">
+    Kích thước có sẵn
+  </label>
+  <Controller
+    name="selectedSizes"
+    control={control}
+    render={({ field }) => (
+      <div className="flex flex-wrap gap-2">
+        {/* Clothes sizes */}
+        <p className="w-full text-sm font-semibold text-gray-600">Size áo</p>
+        {PRODUCT_SIZES.filter((size) => !["36","37","38","39","40","41","42","43","44"].includes(size.id)).map((size) => {
+          const isSelected = field.value.includes(size.id);
+          return (
+            <button
+              key={size.id}
+              type="button"
+              onClick={() => {
+                const newSelectedSizes = isSelected
+                  ? field.value.filter((id) => id !== size.id)
+                  : [...field.value, size.id];
+                field.onChange(newSelectedSizes);
+              }}
+              className={`px-4 py-2 border rounded-md text-sm font-medium transition-all ${
+                isSelected
+                  ? "border-blue-500 bg-blue-50 text-blue-600"
+                  : "border-gray-300 hover:border-gray-400"
+              }`}
+            >
+              {size.name}
+            </button>
+          );
+        })}
+
+        {/* Shoes sizes */}
+        <p className="w-full text-sm font-semibold text-gray-600 mt-2">Size giày</p>
+        {PRODUCT_SIZES.filter((size) => ["36","37","38","39","40","41","42","43","44"].includes(size.id)).map((size) => {
+          const isSelected = field.value.includes(size.id);
+          return (
+            <button
+              key={size.id}
+              type="button"
+              onClick={() => {
+                const newSelectedSizes = isSelected
+                  ? field.value.filter((id) => id !== size.id)
+                  : [...field.value, size.id];
+                field.onChange(newSelectedSizes);
+              }}
+              className={`px-4 py-2 border rounded-md text-sm font-medium transition-all ${
+                isSelected
+                  ? "border-blue-500 bg-blue-50 text-blue-600"
+                  : "border-gray-300 hover:border-gray-400"
+              }`}
+            >
+              {size.name}
+            </button>
+          );
+        })}
+      </div>
+    )}
+  />
+</div>
+
           </div>
 
           {/* Product Images */}
@@ -906,7 +910,7 @@ const AddProduct: React.FC = () => {
                     src={url || "/placeholder.svg"}
                     alt={`Preview ${index + 1}`}
                     className="h-full w-full object-cover rounded-lg"
-                 
+                    crossOrigin="anonymous"
                   />
                   <button
                     type="button"

@@ -51,10 +51,10 @@ export default function CartDropdown() {
           <div>
             <div className="flex justify-between ">
               <div>                <h3 className="text-base font-medium ">
-                  <Link onClick={close} to={"/cua-hang/" + product?._id}>
-                    {product?.name}
-                  </Link>
-                </h3>
+                <Link onClick={close} to={"/cua-hang/" + product?._id}>
+                  {product?.name}
+                </Link>
+              </h3>
                 {item.selectedSize && (
                   <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                     <span className="font-medium">Size:</span> {item.selectedSize}

@@ -48,6 +48,7 @@ const NcImage: FC<NcImageProps> = ({
     if (_imageEl) {
       _imageEl.src = src;
       _imageEl.addEventListener("load", _handleImageLoaded);
+      _imageEl.crossOrigin = "anonymous"; // Ensure CORS is set if needed
     }
     return true;
   };
@@ -81,7 +82,7 @@ const NcImage: FC<NcImageProps> = ({
       ref={_containerRef}
     >
       {__src && imageLoaded ? (
-        <img src={__src} className={className} alt={alt} {...args} />
+        <img src={__src} className={className} alt={alt} {...args} crossOrigin="anonymous" />
       ) : (
         renderLoadingPlaceholder()
       )}
