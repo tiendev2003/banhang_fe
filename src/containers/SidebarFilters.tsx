@@ -10,8 +10,8 @@ import { AppDispatch, RootState } from "../store";
 import { Brand, Category } from "../types";
 
 const DATA_sortOrderRadios = [
-  { name: "Z-A", _id: "z-a" },
   { name: "A-Z", _id: "a-z" },
+  { name: "Z-A", _id: "z-a" },
   { name: "Price Low - High", _id: "Price-low-high" },
   { name: "Price High - Low", _id: "Price-high-low" },
 ];
@@ -49,12 +49,13 @@ const SidebarFilters = () => {
 
   const applyFilters = (
     categoryId: string | null = selectedCategory,
-    brandId: string | null = selectedBrand
+    brandId: string | null = selectedBrand,
+    sortId: string = sortOrderStates
   ) => {
     let sortBy: string | undefined = undefined;
     let sortDirection: "asc" | "desc" | undefined = undefined;
 
-    switch (sortOrderStates) {
+    switch (sortId) {
       case "a-z":
         sortBy = "name";
         sortDirection = "asc";
@@ -90,20 +91,20 @@ const SidebarFilters = () => {
   };
 
   const debouncedApplyFilters = useCallback(
-    debounce(() => applyFilters(selectedCategory, selectedBrand), 300),
+    debounce(() => applyFilters(selectedCategory, selectedBrand, sortOrderStates), 300),
     [rangePrices, selectedCategory, selectedBrand, sortOrderStates, dispatch]
   );
 
   const handleChangeCategory = (id: string) => {
     const newCategory = id === selectedCategory ? null : id;
     setSelectedCategory(newCategory);
-    applyFilters(newCategory, selectedBrand); // Truyền giá trị mới trực tiếp
+    applyFilters(newCategory, selectedBrand, sortOrderStates); // Truyền giá trị mới trực tiếp
   };
 
   const handleChangeBrand = (id: string) => {
     const newBrand = id === selectedBrand ? null : id;
     setSelectedBrand(newBrand);
-    applyFilters(selectedCategory, newBrand); // Truyền giá trị mới trực tiếp
+    applyFilters(selectedCategory, newBrand, sortOrderStates); // Truyền giá trị mới trực tiếp
   };
 
   const handlePriceChange = (prices: number | number[]) => {
@@ -113,7 +114,7 @@ const SidebarFilters = () => {
 
   const handleSortChange = (id: string) => {
     setSortOrderStates(id);
-    applyFilters(); // Gọi trực tiếp để áp dụng ngay
+    applyFilters(selectedCategory, selectedBrand, id); // Truyền giá trị sort mới trực tiếp
   };
 
   const filteredCategories = categories?.filter((item: Category) =>
@@ -272,7 +273,9 @@ const SidebarFilters = () => {
           label={item.name}
           checked={sortOrderStates === item._id}
           sizeClassName="w-5 h-5"
-          onChange={handleSortChange}
+          onChange={()=>{
+            handleSortChange(item._id);
+          }}
           className="!text-sm"
         />
       ))}

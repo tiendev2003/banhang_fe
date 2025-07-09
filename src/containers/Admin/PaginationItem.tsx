@@ -18,7 +18,7 @@ const PaginationItem = ({
 }) => {
   const renderPageNumbers = () => {
     const totalPages = Math.max(1, pagination?.totalPages ?? 1);
-    const currentPage = Math.max(1, pagination?.currentPage ?? 1);
+    const currentPage = Math.max(1, pagination?.page ?? 1);
     const maxPagesToShow = 5;
 
     const pages: (number | string)[] = [];
@@ -71,8 +71,8 @@ const PaginationItem = ({
         </div>
       <div className="flex flex-wrap justify-center gap-2">
         <button
-          onClick={() => handlePageChange(Math.max(1, (pagination?.currentPage ?? 1) - 1))}
-          disabled={(pagination?.currentPage ?? 1) <= 1}
+          onClick={() => handlePageChange(Math.max(1, (pagination?.page ?? 1) - 1))}
+          disabled={(pagination?.page ?? 1) <= 1}
           className="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeftIcon className="h-5 w-5" />
@@ -88,7 +88,7 @@ const PaginationItem = ({
               key={page}
               onClick={() => handlePageChange(page)}
               className={classNames(
-                (pagination?.currentPage || 1) === page
+                (pagination?.page || 1) === page
                   ? "bg-indigo-600 text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300",
                 "px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -99,8 +99,8 @@ const PaginationItem = ({
           )
         )}
         <button
-          onClick={() => handlePageChange(Math.min((pagination?.currentPage ?? 1) + 1, pagination?.totalPages ?? 1))}
-          disabled={(pagination?.currentPage ?? 1) >= (pagination?.totalPages ?? 1)}
+          onClick={() => handlePageChange(Math.min((pagination?.page ?? 1) + 1, pagination?.totalPages ?? 1))}
+          disabled={(pagination?.page ?? 1) >= (pagination?.totalPages ?? 1)}
           className="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronRightIcon className="h-5 w-5" />

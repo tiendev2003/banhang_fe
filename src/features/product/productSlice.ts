@@ -4,9 +4,9 @@ import api from "../../api/api";
 import { Review } from "../../types";
 import { Pagination } from "../../types/pagination.types";
 import {
-    Product,
-    ProductDetailResponse,
-    ProductRequest,
+  Product,
+  ProductDetailResponse,
+  ProductRequest,
 } from "../../types/product.types";
 
 interface FilterParams {
@@ -353,11 +353,7 @@ const productSlice = createSlice({
         ) => {
           state.loading = false;
           state.products = action.payload.data;
-          // Chuyển đổi currentPage từ 0-based sang 1-based để hiển thị
-          state.pagination = {
-            ...action.payload.pagination,
-            currentPage: action.payload.pagination.currentPage + 1
-          };
+          state.pagination = action.payload.pagination;
         }
       )
       .addCase(fetchProducts.rejected, (state, action) => {
@@ -412,7 +408,7 @@ const productSlice = createSlice({
           );
         }
       )
-      .addCase(deleteProduct.rejected, (state, action) => {
+      .addCase(deleteProduct.rejected, (state) => {
         state.loading = false;
       })
       .addCase(fetchProductById.pending, (state) => {
@@ -457,11 +453,7 @@ const productSlice = createSlice({
         ) => {
           state.loading = false;
           state.products = action.payload.data;
-          // Chuyển đổi currentPage từ 0-based sang 1-based để hiển thị
-          state.pagination = {
-            ...action.payload.pagination,
-            currentPage: action.payload.pagination.currentPage + 1
-          };
+          state.pagination = action.payload.pagination;
         }
       )
       .addCase(filterProducts.rejected, (state, action) => {

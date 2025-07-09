@@ -8,7 +8,7 @@ export interface PaginationProps {
   className?: string;
 }
 const Pagination: FC<PaginationProps> = ({ pagination, onPageChange, className = "" }) => {
-  const currentPage = pagination?.currentPage ?? 1;
+  const currentPage = pagination?.page ?? 1;
   const totalPages = pagination?.totalPages ?? 1;
   const hasProducts = pagination?.totalItems ?? 0 > 0; // Giả sử API trả về totalItems
 
