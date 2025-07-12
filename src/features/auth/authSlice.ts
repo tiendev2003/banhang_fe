@@ -181,7 +181,7 @@ export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (email: string, { rejectWithValue }) => {
     try {
-      await api.post(`/api/user/send-otp?email=${email}`);
+      await api.post(`/api/user/send-otp`, { email });
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>;
       return rejectWithValue(
@@ -206,8 +206,35 @@ export const verifyOtp = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      await api.post(`/api/user/verify-otp?email=${email}&otp=${otp}`);
+      await api.post(`/api/user/verify-otp`, { otp, email });
     } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      return rejectWithValue(
+        axiosError.response?.data.message ||
+          axiosError.message ||
+          "An error occurred"
+      );
+    }
+  }
+);
+
+// reset password
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (
+    {
+      email,
+      newPassword,
+    }: {
+      email: string;
+      newPassword: string;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      await api.post(`/api/user/reset-password`, { email, newPassword });
+    } catch (error) {
+      console.error("Error in resetPassword thunk:", error);
       const axiosError = error as AxiosError<{ message: string }>;
       return rejectWithValue(
         axiosError.response?.data.message ||

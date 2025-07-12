@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { changePass } from "../../features/auth/authSlice";
+import { resetPassword } from "../../features/auth/authSlice";
 import ButtonPrimary from "../../shared/Button/ButtonPrimary";
 import Input from "../../shared/Input/Input";
 import { AppDispatch } from "../../store";
@@ -20,16 +20,15 @@ const PageChangePass: FC = () => {
     const onSubmit = async (data: any) => {
         setLoading(true);
         try {
-            await dispatch(changePass({
+            await dispatch(resetPassword({
                 email: email || "",
-                currentPassword: data?.currentPassword,
                 newPassword: data?.newPassword,
             })).unwrap();
             navigate("/login");
             toast.success("Thay đổi mật khẩu thành công");
-        } catch (error) {
-            console.error("Failed to change password", error);
-            toast.error("Thay đổi mật khẩu thất bại");
+        } catch (error:any) {
+            console.error("Failed to change password", error.message);
+            toast.error( error.message);
         } finally {
             setLoading(false);
         }

@@ -23,7 +23,7 @@ const PageForgotPassword: FC<PageForgotPasswordProps> = ({ className = "" }) => 
             await dispatch(forgotPassword(data?.email)).unwrap();
             toast.success("Yêu cầu đặt lại mật khẩu đã được gửi");
             navigate("/verify-otp?email=" + data?.email);
-        } catch (error) {
+        } catch (error :any) {
             console.error("Failed to send reset password request", error);
             toast.error("Gửi yêu cầu thất bại");
         } finally {
